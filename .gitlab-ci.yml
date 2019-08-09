@@ -1,0 +1,20 @@
+stages:
+  - test
+
+.lein:
+  image: clojure:lein
+
+test:api:
+  extends: .lein
+  stage: test
+  script:
+    - cd api
+    - lein deps
+    - lein test
+
+test:worker:
+  extends: .lein
+  script:
+    - cd worker
+    - lein deps
+    - lein test
