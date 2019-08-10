@@ -18,6 +18,3 @@ test:worker:
     - cd worker
     - lein deps
     - lein test
-
-include:
-  template: Jobs/Code-Quality.gitlab-ci.yml
