@@ -7,4 +7,5 @@
                  [org.clojure/tools.logging "0.5.0"]]
   :main ^:skip-aot worker.core
   :target-path "target/%s"
-  :profiles {:uberjar {:aot :all}})
+  :profiles {:uberjar {:aot :all}
+             :dev {:plugins [[lein-cljfmt "0.6.4"]]}})

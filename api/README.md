@@ -2,18 +2,23 @@
 
 FIXME
 
-## Prerequisites
+## Usage
 
-You will need [Leiningen][] 2.0.0 or above installed.
+### Run the application locally
 
-[leiningen]: https://github.com/technomancy/leiningen
+`lein ring server`
 
-## Running
+### Packaging and running as standalone jar
 
-To start a web server for the application, run:
+```
+lein do clean, ring uberjar
+java -jar target/server.jar
+```
 
-    lein ring server
+### Packaging as war
+
+`lein ring uberwar`
 
 ## License
 
-Copyright © 2019 FIXME
+Copyright ©  FIXME

@@ -1,28 +1,46 @@
 stages:
+  - style
   - test
 
 .lein:
   image: clojure:lein
 
-test:api:
+.lein-api:
   extends: .lein
+  before_script:
+    - cd api
+
+.lein-worker:
+  extends: .lein
+  before_script:
+    - cd worker
+    - curl -fsSL https://download.docker.com/linux/static/stable/x86_64/docker-19.03.1.tgz -o /tmp/docker.tar.gz
+    - tar -zxvf /tmp/docker.tar.gz --strip 1 -C /usr/bin
+
+style:api:
+  extends: .lein-api
+  stage: style
+  script:
+    - lein cljfmt check 
+
+style:worker:
+  extends: .lein-worker
+  stage: style
+  script:
+    - lein cljfmt check 
+
+test:api:
+  extends: .lein-api
   stage: test
   script:
-    - cd api
-    - lein deps
     - lein test
 
 test:worker:
-  extends: .lein
+  extends: .lein-worker
   services:
     - docker:dind
   variables:
     DOCKER_DRIVER: overlay2
     DOCKER_HOST: tcp://docker:2375/
-  before_script:
-    - curl -fsSL https://download.docker.com/linux/static/stable/x86_64/docker-19.03.1.tgz -o /tmp/docker.tar.gz
-    - tar -zxvf /tmp/docker.tar.gz --strip 1 -C /usr/bin
   script:
-    - cd worker
-    - lein deps
     - lein test
