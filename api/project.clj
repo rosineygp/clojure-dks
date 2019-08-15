@@ -1,12 +1,13 @@
-(defproject api "0.1.0-SNAPSHOT"
-  :description "FIXME: write description"
-  :url "http://example.com/FIXME"
-  :min-lein-version "2.0.0"
-  :dependencies [[org.clojure/clojure "1.10.0"]
-                 [compojure "1.6.1"]
-                 [ring/ring-defaults "0.3.2"]]
-  :plugins [[lein-ring "0.12.5"]]
-  :ring {:handler api.handler/app}
-  :profiles
-  {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]
-                        [ring/ring-mock "0.3.2"]]}})
+ (defproject api "0.1.0-SNAPSHOT"
+   :description "FIXME: write description"
+   :dependencies [[org.clojure/clojure "1.8.0"]
+                  [metosin/compojure-api "1.1.11"]
+                  [com.novemberain/monger "3.1.0"]
+                  [clj-time "0.15.2"]]
+   :ring {:handler api.handler/app}
+   :uberjar-name "server.jar"
+   :profiles {:dev {:dependencies [[javax.servlet/javax.servlet-api "3.1.0"]
+                                   [cheshire "5.5.0"]
+                                   [ring/ring-mock "0.3.0"]]
+                    :plugins [[lein-ring "0.12.0"]
+                              [lein-cljfmt "0.6.4"]]}})
