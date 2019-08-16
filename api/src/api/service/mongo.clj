@@ -1,8 +1,6 @@
 (ns api.service.mongo
   (:require [monger.core :as mg]
-            [monger.collection :as mc]
-            [clj-time.core :as t]
-            [clj-time.local :as l])
+            [monger.collection :as mc])
   (:import org.bson.types.ObjectId))
 
 (def database "schedule")
@@ -14,21 +12,18 @@
     {:conn conn
      :db db}))
 
-(defn create [data]
-  (let [{conn :conn
-         db :db} (mongo database)]
-    (mc/insert-and-return
-     db collection (merge
-                    data
-                    {:status "created"
-                     :client-id "anonymous"
-                     :logs []
-                     :created-at (str (l/local-now))
-                     :updated-at nil
-                     :deleted-at nil
-                     :executed-at nil}))))
+(defn id-to-str [data]
+  (if-let [id (:_id data)]
+    (assoc data :_id (str id))))
 
+(defn create [data]
+  (let [{db :db} (mongo database)]
+    (id-to-str (mc/insert-and-return
+                db collection data))))
 (defn restore []
-  (let [{conn :conn
-         db :db} (mongo database)]
-    (mc/find db collection)))
+  (let [{db :db} (mongo database)]
+    (map id-to-str (mc/find-maps db collection))))
+
+(defn restore-by-id [id]
+  (let [{db :db} (mongo database)]
+    (id-to-str (mc/find-map-by-id db collection (ObjectId. id)))))
