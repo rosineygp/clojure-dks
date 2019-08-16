@@ -28,15 +28,15 @@
        (ok (schedule/create data)))
 
      (GET "/schedule" []
-       :return model/Schedule
+       :return [model/Schedule]
        :summary "return all jobs scheduled"
        (ok (schedule/restore)))
 
      (GET "/schedule/:id" []
-       :path-params [id :- s/Int]
+       :path-params [id :- s/Str]
        :return model/Schedule
-       :summary "get docker job"
-       (ok (schedule/restore id)))
+       :summary "return a job by Object id"
+       (ok (schedule/restore-by-id id)))
 
      (PUT "/schedule/:id" []
        :path-params [id :- s/Int]
