@@ -20,21 +20,19 @@
 (defn restore-by-id [id]
   (mongo/restore-by-id id))
 
-(defn update [id]
-  (println id)
-  (hash-map
-   :id id
-   :command "ls -la"
-   :docker-image "alpine"
-   :cron "* * * * *"
-   :status "running"
-   :created-at "2019"
-   :updated-at "2019"
-   :deleted-at "2019"
-   :logs {:exit "0"
-          :out "ok computer"}))
+(defn update [id data]
+  (let [document (dissoc (restore-by-id id) :_id)
+        time {:updated-at (str (l/local-now))}]
+    (mongo/update-by-id id (merge document data time))
+    (mongo/restore-by-id id)))
+
+(defn patch [id data]
+  (let [document (dissoc (restore-by-id id) :_id)
+        time {:updated-at (str (l/local-now))}]
+    (mongo/update-by-id id (merge document data time))
+    (mongo/restore-by-id id)))
 
 (defn delete [id]
   (let [document (dissoc (restore-by-id id) :_id)
         data {:deleted-at (str (l/local-now))}]
-    {:result (mongo/delete-by-id id (merge document data))}))
+    {:result (mongo/update-by-id id (merge document data))}))

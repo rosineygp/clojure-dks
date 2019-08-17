@@ -28,6 +28,6 @@
   (let [{db :db} (mongo database)]
     (id-to-str (mc/find-map-by-id db collection (ObjectId. id)))))
 
-(defn delete-by-id [id data]
+(defn update-by-id [id data]
   (let [{db :db} (mongo database)]
     (.getN (mc/update-by-id db collection (ObjectId. id) data))))
