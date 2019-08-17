@@ -35,4 +35,5 @@
 (defn delete [id]
   (let [document (dissoc (restore-by-id id) :_id)
         data {:deleted-at (str (l/local-now))}]
-    {:result (mongo/update-by-id id (merge document data))}))
+    (mongo/update-by-id id (merge document data))
+    (mongo/restore-by-id id)))

@@ -11,10 +11,10 @@
    {:swagger
     {:ui "/"
      :spec "/swagger.json"
-     :data {:info {:title "Api Job Scheduling"
-                   :description "Simple CRUD API for schedule jobs in docker"}
-            :tags [{:name "api", :description "Schedule jobs in docker"}
-                   {:name "health", :description "Liveness and Readiness Probes"}]
+     :data {:info {:title "Api Job Scheduler"
+                   :description "Simple CRUD API for schedule jobs with docker"}
+            :tags [{:name "api", :description "schedule jobs"}
+                   {:name "health", :description "liveness and readiness probes"}]
             :consumes ["application/json"]
             :produces ["application/json"]}}}
 
@@ -24,49 +24,84 @@
      (POST "/schedule" []
        :return model/Schedule
        :body [data model/Create]
-       :summary "Schedule new docker job"
+       :summary "create job"
+       :description
+       "Just schedule a docker job\n
+       [json body]
+       docker-image: The any docker image added in a public repository like hub.docker.com
+       cron: Scheduled method based on Linux cron job (Ex. * * * * *) Every minute
+       command: string for command line (ex. ls -la)"
        (ok (schedule/create data)))
 
      (GET "/schedule" []
        :return [model/Schedule]
-       :summary "return all jobs scheduled"
+       :summary "return jobs"
+       :description
+       "Return all jobs registered"
        (ok (schedule/restore)))
 
      (GET "/schedule/:id" []
        :path-params [id :- s/Str]
        :return model/Schedule
-       :summary "return a job by Object id"
+       :summary "return a job by id"
+       :description
+       "Return all information from a document\n
+       [path parameters]
+       id: mongo object id"
        (ok (schedule/restore-by-id id)))
 
      (PUT "/schedule/:id" []
        :path-params [id :- s/Str]
        :return model/Schedule
        :body [data model/Create]
-       :summary "Update a entire job by id"
+       :summary "full job update by id"
+       :description
+       "Alter all data from a job\n
+       [path parameters]
+       id: mongo object id\n
+       [json body]
+       docker-image: The any docker image added in a public repository like hub.docker.com
+       cron: Scheduled method based on Linux cron job (Ex. * * * * *) Every minute
+       command: string for command line (ex. ls -la)"
        (ok (schedule/update id data)))
 
      (PATCH "/schedule/:id" []
        :path-params [id :- s/Str]
        :return model/Schedule
        :body [data model/Patch]
-       :summary "Update a entire job by id"
+       :summary "update an item or many from a job"
+       :description
+       "Update just one item or many from a job\n
+       [path parameters]
+       id: mongo object id\n
+       [json body]
+       * docker-image: The any docker image added in a public repository like hub.docker.com
+       * cron: Scheduled method based on Linux cron job (Ex. * * * * *) Every minute
+       * command: string for command line (ex. ls -la)\n
+       * optional\n
+       Notes: if any value passed, :updated-at will be updated with now() values"
        (ok (schedule/patch id data)))
 
      (DELETE "/schedule/:id" []
        :path-params [id :- s/Str]
-       :return model/Delete
-       :summary "Delete a job by id"
+       :return model/Schedule
+       :summary "delete a job by id"
+       :description
+       "Apply a soft delete for a job
+       [path parameters]
+       id: mongo object id\n
+       Notes: delete job is asynchronous and take a time to stop a running job"
        (ok (schedule/delete id))))
 
    (context "/health" []
      :tags ["health"]
 
      (GET "/liveness" []
-       :return {:status s/Str}
-       :summary "return api liveness state"
+       :return model/Probe
+       :summary "liveness state"
        (ok (health/liveness)))
 
      (GET "/readiness" []
-       :return {:status s/Str}
-       :summary "return api readiness state"
+       :return model/Probe
+       :summary "readiness state"
        (ok (health/readiness))))))
