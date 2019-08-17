@@ -10,4 +10,5 @@
                                    [cheshire "5.5.0"]
                                    [ring/ring-mock "0.3.0"]]
                     :plugins [[lein-ring "0.12.0"]
-                              [lein-cljfmt "0.6.4"]]}})
+                              [lein-cljfmt "0.6.4"]
+                              [lein-cloverage "1.1.1"]]}})

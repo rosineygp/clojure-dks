@@ -1,6 +1,6 @@
 stages:
   - style
-  - test
+  - unit
 
 .lein:
   image: clojure:lein
@@ -14,33 +14,50 @@ stages:
   extends: .lein
   before_script:
     - cd worker
-    - curl -fsSL https://download.docker.com/linux/static/stable/x86_64/docker-19.03.1.tgz -o /tmp/docker.tar.gz
-    - tar -zxvf /tmp/docker.tar.gz --strip 1 -C /usr/bin
 
-style:api:
-  extends: .lein-api
-  stage: style
-  script:
-    - lein cljfmt check 
-
-style:worker:
-  extends: .lein-worker
-  stage: style
-  script:
-    - lein cljfmt check 
-
-test:api:
-  extends: .lein-api
-  stage: test
-  script:
-    - lein test
-
-test:worker:
+.lein-worker-docker:
   extends: .lein-worker
   services:
     - docker:dind
   variables:
     DOCKER_DRIVER: overlay2
     DOCKER_HOST: tcp://docker:2375/
+  before_script:
+    - cd worker
+    - curl -fsSL https://download.docker.com/linux/static/stable/x86_64/docker-19.03.1.tgz -o /tmp/docker.tar.gz
+    - tar -zxvf /tmp/docker.tar.gz --strip 1 -C /usr/bin
+
+.lein-style:
+  extends: .lein
+  stage: style
   script:
-    - lein test
+    - lein cljfmt check
+
+.lein-unit:
+  stage: unit
+  script:
+    - lein cloverage --junit --output ../target
+  artifacts:
+    reports:
+      junit: target/junit.xml
+
+style:api:
+  extends: 
+    - .lein-api
+    - .lein-style
+
+style:worker:
+  extends: 
+    - .lein-worker
+    - .lein-style
+
+unit:api:
+  extends: 
+    - .lein-api
+    - .lein-unit
+
+unit:worker:
+  extends: 
+    - .lein-worker-docker
+    - .lein-unit
+
