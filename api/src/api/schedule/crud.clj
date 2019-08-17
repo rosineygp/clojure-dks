@@ -35,15 +35,6 @@
           :out "ok computer"}))
 
 (defn delete [id]
-  (println id)
-  (hash-map
-   :id id
-   :command "ls -la"
-   :docker-image "alpine"
-   :cron "* * * * *"
-   :status "running"
-   :created-at "2019"
-   :updated-at "2019"
-   :deleted-at "2019"
-   :logs {:exit "0"
-          :out "ok computer"}))
+  (let [document (dissoc (restore-by-id id) :_id)
+        data {:deleted-at (str (l/local-now))}]
+    {:result (mongo/delete-by-id id (merge document data))}))

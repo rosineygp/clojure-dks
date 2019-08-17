@@ -14,8 +14,8 @@
    :cron s/Str
    :command s/Str})
 
-(s/defschema delete
-  {:id s/Str})
+(s/defschema Delete
+  {:result s/Int})
 
 (s/defschema logs
   {:exit s/Str
