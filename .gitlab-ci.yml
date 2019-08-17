@@ -2,6 +2,7 @@ stages:
   - style
   - linter
   - unit
+  - kibit
 
 .lein:
   image: clojure:lein
@@ -48,6 +49,12 @@ stages:
     reports:
       junit: target/junit.xml
 
+.lein-kibit:
+  extends: .lein
+  stage: kibit
+  script:
+    - lein kibit
+
 style:api:
   extends: 
     - .lein-api
@@ -81,3 +88,12 @@ unit:worker:
     - .lein-worker-docker
     - .lein-unit
 
+kibit:api:
+  extends: 
+    - .lein-api
+    - .lein-kibit
+
+kibit:worker:
+  extends: 
+    - .lein-worker
+    - .lein-kibit
