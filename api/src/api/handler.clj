@@ -39,11 +39,18 @@
        (ok (schedule/restore-by-id id)))
 
      (PUT "/schedule/:id" []
-       :path-params [id :- s/Int]
+       :path-params [id :- s/Str]
        :return model/Schedule
-       :body [data model/update]
-       :summary "Update a job by id"
-       (ok (schedule/update id)))
+       :body [data model/Create]
+       :summary "Update a entire job by id"
+       (ok (schedule/update id data)))
+
+     (PATCH "/schedule/:id" []
+       :path-params [id :- s/Str]
+       :return model/Schedule
+       :body [data model/Patch]
+       :summary "Update a entire job by id"
+       (ok (schedule/patch id data)))
 
      (DELETE "/schedule/:id" []
        :path-params [id :- s/Str]

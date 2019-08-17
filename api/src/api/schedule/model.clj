@@ -9,10 +9,10 @@
 (s/defschema restore
   {:id s/Str})
 
-(s/defschema update
-  {:docker-image s/Str
-   :cron s/Str
-   :command s/Str})
+(s/defschema Patch
+  {(s/optional-key :docker-image) s/Str
+   (s/optional-key :cron) s/Str
+   (s/optional-key :command) s/Str})
 
 (s/defschema Delete
   {:result s/Int})
