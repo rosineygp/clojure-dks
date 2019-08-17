@@ -71,6 +71,8 @@ linter:api:
   extends:
     - .lein-api
     - .lein-linter
+  script:
+    - lein eastwood || true
 
 linter:worker:
   stage: linter
