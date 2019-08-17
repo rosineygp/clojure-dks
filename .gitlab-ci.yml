@@ -6,6 +6,9 @@ stages:
 
 .lein:
   image: clojure:lein
+  cache:
+    paths:
+      - ~/.m2
 
 .lein-api:
   extends: .lein
