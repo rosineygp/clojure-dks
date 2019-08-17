@@ -46,8 +46,8 @@
        (ok (schedule/update id)))
 
      (DELETE "/schedule/:id" []
-       :path-params [id :- s/Int]
-       :return model/Schedule
+       :path-params [id :- s/Str]
+       :return model/Delete
        :summary "Delete a job by id"
        (ok (schedule/delete id))))
 
