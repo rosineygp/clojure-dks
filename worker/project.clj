@@ -10,4 +10,5 @@
   :profiles {:uberjar {:aot :all}
              :dev {:plugins [[lein-cljfmt "0.6.4"]
                              [lein-cloverage "1.1.1"]
-                             [jonase/eastwood "0.3.5"]]}})
+                             [jonase/eastwood "0.3.5"]
+                             [lein-kibit "0.1.7"]]}})
