@@ -6,9 +6,6 @@
    :cron s/Str
    :command s/Str})
 
-(s/defschema restore
-  {:id s/Str})
-
 (s/defschema Patch
   {(s/optional-key :docker-image) s/Str
    (s/optional-key :cron) s/Str
@@ -17,7 +14,7 @@
 (s/defschema Delete
   {:result s/Int})
 
-(s/defschema logs
+(s/defschema Logs
   {:exit s/Str
    :out s/Str
    :error s/Str})
@@ -33,4 +30,7 @@
    :updated-at (s/maybe s/Str)
    :deleted-at (s/maybe s/Str)
    :executed-at (s/maybe s/Str)
-   :logs (s/maybe [logs])})
+   :logs (s/maybe [Logs])})
+
+(s/defschema Probe
+  {:status s/Str})
