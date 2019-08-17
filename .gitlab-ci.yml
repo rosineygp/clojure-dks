@@ -1,5 +1,6 @@
 stages:
   - style
+  - linter
   - unit
 
 .lein:
@@ -33,6 +34,12 @@ stages:
   script:
     - lein cljfmt check
 
+.lein-linter:
+  extends: .lein
+  stage: linter
+  script:
+    - lein eastwood
+
 .lein-unit:
   stage: unit
   script:
@@ -50,6 +57,19 @@ style:worker:
   extends: 
     - .lein-worker
     - .lein-style
+
+linter:api:
+  stage: linter
+  allow_failure: true
+  extends:
+    - .lein-api
+    - .lein-linter
+
+linter:worker:
+  stage: linter
+  extends:
+    - .lein-worker
+    - .lein-linter
 
 unit:api:
   extends: 

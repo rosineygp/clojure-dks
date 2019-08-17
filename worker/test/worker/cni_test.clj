@@ -33,5 +33,6 @@
     (is (= (-> (cni/docker-run "alpine" ["ls" "-la" "/"])
                :out
                (clojure.string/trim)
-               (cni/docker-logs))))))
+               (cni/docker-logs)
+               :exit) 0))))
 
