@@ -8,4 +8,5 @@
   :main ^:skip-aot worker.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}
-             :dev {:plugins [[lein-cljfmt "0.6.4"]]}})
+             :dev {:plugins [[lein-cljfmt "0.6.4"]
+                             [lein-cloverage "1.1.1"]]}})
