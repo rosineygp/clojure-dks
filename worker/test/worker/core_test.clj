@@ -1,7 +1,7 @@
 (ns worker.core-test
   (:require [clojure.test :refer :all]
             [worker.core :refer :all]
-            [worker.cni :refer :all :as cni]))
+            [worker.service.cni :refer :all :as cni]))
 
 ; (deftest a-test
 ;   (testing "FIXME, I fail."

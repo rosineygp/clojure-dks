@@ -1,15 +1,11 @@
 (ns worker.core
-  (:require [worker.cni :refer :all :as cni])
+  (:require [worker.controller.orchestrator :refer :all :as o])
   (:gen-class))
-
-(use '[clojure.java.shell :only [sh]])
 
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
-  (println "---")
-  (println  (cni/docker-run "ubuntu" ["ls" "-la"]))
-  (println  (cni/docker-run "ubuntu" ["ps" "xua"]))
-  (println  (cni/docker-run "ubuntu" ["000000a11"]))
-  (println "---")
-  (println "Hello, World!"))
+  (while true
+    (o/schedule)
+    (Thread/sleep 10000)
+    (println "Looping")))

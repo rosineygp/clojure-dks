@@ -1,6 +1,6 @@
 (ns worker.cni-test
   (:require [clojure.test :refer :all]
-            [worker.cni :refer :all :as cni]))
+            [worker.service.cni :refer :all :as cni]))
 
 (deftest docker-pull-test
   (testing "Dowload images"

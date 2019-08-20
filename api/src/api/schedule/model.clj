@@ -15,9 +15,9 @@
   {:result s/Int})
 
 (s/defschema Logs
-  {:exit s/Str
+  {:exit s/Int
    :out s/Str
-   :error s/Str})
+   :err s/Str})
 
 (s/defschema Schedule
   {:_id s/Str
@@ -30,7 +30,7 @@
    :updated-at (s/maybe s/Str)
    :deleted-at (s/maybe s/Str)
    :executed-at (s/maybe s/Str)
-   :logs (s/maybe [Logs])})
+   :logs Logs})
 
 (s/defschema Probe
   {:status s/Str})
