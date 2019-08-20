@@ -49,6 +49,10 @@ stages:
   script:
     - lein kibit
 
+.hadolint:
+  image: hadolint/hadolint:latest-debian
+  stage: test
+
 style:api:
   extends: 
     - .lein-api
@@ -88,3 +92,13 @@ kibit:worker:
   extends: 
     - .lein-worker
     - .lein-kibit
+
+hadolint:api:
+  extends: .hadolint
+  script:
+    - hadolint api/Dockerfile
+
+hadolint:worker:
+  extends: .hadolint
+  script:
+    - hadolint worker/Dockerfile
