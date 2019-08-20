@@ -7,8 +7,7 @@
                  [org.clojure/tools.logging "0.5.0"]
                  [com.novemberain/monger "3.1.0"]
                  [clj-time "0.15.2"]
-                 [me.raynes/fs "1.4.6"]
-                 [org.slf4j/slf4j-nop "1.7.12"]]
+                 [me.raynes/fs "1.4.6"]]
   :main ^:skip-aot worker.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}

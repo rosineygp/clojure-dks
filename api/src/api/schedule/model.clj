@@ -30,7 +30,7 @@
    :updated-at (s/maybe s/Str)
    :deleted-at (s/maybe s/Str)
    :executed-at (s/maybe s/Str)
-   :logs Logs})
+   :logs (s/maybe [Logs])})
 
 (s/defschema Probe
   {:status s/Str})
