@@ -1,10 +1,8 @@
 stages:
-  - style
-  - linter
-  - unit
-  - kibit
+  - test
 
 .lein:
+  stage: test
   image: clojure:lein
 
 .lein-api:
@@ -31,18 +29,15 @@ stages:
 
 .lein-style:
   extends: .lein
-  stage: style
   script:
     - lein cljfmt check
 
 .lein-linter:
   extends: .lein
-  stage: linter
   script:
-    - lein eastwood
+    - lein eastwood || true
 
 .lein-unit:
-  stage: unit
   script:
     - lein cloverage --junit --output ../target
   artifacts:
@@ -51,7 +46,6 @@ stages:
 
 .lein-kibit:
   extends: .lein
-  stage: kibit
   script:
     - lein kibit
 
@@ -66,16 +60,11 @@ style:worker:
     - .lein-style
 
 linter:api:
-  stage: linter
-  allow_failure: true
   extends:
     - .lein-api
     - .lein-linter
-  script:
-    - lein eastwood || true
 
 linter:worker:
-  stage: linter
   extends:
     - .lein-worker
     - .lein-linter
