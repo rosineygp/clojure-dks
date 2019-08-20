@@ -10,6 +10,7 @@
                  [me.raynes/fs "1.4.6"]]
   :main ^:skip-aot worker.core
   :target-path "target/%s"
+  :uberjar-name "app-standalone.jar"
   :profiles {:uberjar {:aot :all}
              :dev {:plugins [[lein-cljfmt "0.6.4"]
                              [lein-cloverage "1.1.1"]
