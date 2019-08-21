@@ -20,9 +20,12 @@ stages:
   extends: .lein-worker
   services:
     - docker:dind
+    - mongo:4.2
   variables:
     DOCKER_DRIVER: overlay2
     DOCKER_HOST: tcp://docker:2375/
+    MONGO_INITDB_ROOT_USERNAME: root
+    MONGO_INITDB_ROOT_PASSWORD: password
   before_script:
     - cd worker
     - curl -fsSL https://download.docker.com/linux/static/stable/x86_64/docker-19.03.1.tgz -o /tmp/docker.tar.gz
@@ -83,11 +86,18 @@ linter:worker:
     - .lein-linter
 
 unit:api:
+  services:
+    - mongo:4.2
+  allow_failure: true
+  variables:
+    MONGO_INITDB_ROOT_USERNAME: root
+    MONGO_INITDB_ROOT_PASSWORD: password
   extends: 
     - .lein-api
     - .lein-unit
 
 unit:worker:
+  allow_failure: true
   extends: 
     - .lein-worker-docker
     - .lein-unit

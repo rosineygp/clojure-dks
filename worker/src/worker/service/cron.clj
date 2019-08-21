@@ -26,7 +26,6 @@
 (defn filter-run
   "A suggar for run-it?"
   [cron]
-  (println cron)
   (run-it? (:year cron)
            (:month cron)
            (:day cron)
