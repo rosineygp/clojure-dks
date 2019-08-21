@@ -1,4 +1,4 @@
-(ns api.schedule.crud
+(ns api.controller.crud
   "Application controller."
   (:require [api.service.mongo :as mongo]
             [clj-time.local :as l]))
@@ -52,6 +52,6 @@
   and updating deleted-at time."
   [id]
   (let [document (dissoc (restore-by-id id) :_id)
-        data {:deleted-at (str (l/local-now))}]
+        data {:deleted-at (str (l/local-now)) :status "deleted"}]
     (mongo/update-by-id id (merge document data))
     (mongo/restore-by-id id)))

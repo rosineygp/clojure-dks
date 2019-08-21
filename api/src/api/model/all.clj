@@ -1,4 +1,4 @@
-(ns api.schedule.model
+(ns api.model.all
   "Application model."
   (:require [schema.core :as s]))
 

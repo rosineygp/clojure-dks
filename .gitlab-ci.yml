@@ -118,7 +118,7 @@ codox:api:
     - .lein-docs
   artifacts:
     paths:
-      - api/target/default/doc
+      - /api/target/doc
 
 codox:worker:
   extends:

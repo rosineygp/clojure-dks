@@ -34,6 +34,6 @@
            (:minute cron)))
 
 (defn local-now
-  "retunr local time as string. util to send to db."
+  "return local time as string. util to send to db."
   []
   (str (l/local-now)))

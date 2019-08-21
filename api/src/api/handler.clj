@@ -3,8 +3,8 @@
   (:require [compojure.api.sweet :refer :all]
             [ring.util.http-response :refer :all]
             [schema.core :as s]
-            [api.schedule.model :as model]
-            [api.schedule.crud :as schedule]
+            [api.model.all :as model]
+            [api.controller.crud :as schedule]
             [api.health.probe :as health]))
 
 (def app
@@ -31,7 +31,13 @@
        "Just schedule a docker job\n
        [json body]
        docker-image: The any docker image added in a public repository like hub.docker.com
-       cron: Scheduled method based on Linux cron job (Ex. * * * * *) Every minute
+       cron: an array with date and time [
+         year,
+         month,
+         day,
+         hour,
+         minute
+       ]
        command: string for command line (ex. ls -la)"
        (ok (schedule/create data)))
 
@@ -63,7 +69,13 @@
        id: mongo object id\n
        [json body]
        docker-image: The any docker image added in a public repository like hub.docker.com
-       cron: Scheduled method based on Linux cron job (Ex. * * * * *) Every minute
+       cron: an array with date and time [
+        year,
+        month,
+        day,
+        hour,
+        minute
+       ]
        command: string for command line (ex. ls -la)"
        (ok (schedule/update id data)))
 
