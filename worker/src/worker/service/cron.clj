@@ -18,11 +18,13 @@
           (t/after? sys cron) true
           :else false)))
 
-(defn filter-run [str-cron]
-  (let [vector-cron (vec
-                     (map #(Integer/parseInt %)
-                          (s/split str-cron #" ")))]
-    (apply run-it? vector-cron)))
+(defn filter-run [cron]
+  (println cron)
+  (run-it? (:year cron)
+           (:month cron)
+           (:day cron)
+           (:hour cron)
+           (:minute cron)))
 
 (defn local-now []
   (str (l/local-now)))
