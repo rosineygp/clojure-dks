@@ -3,9 +3,9 @@
   (:gen-class))
 
 (defn -main
-  "I don't do a whole lot ... yet."
+  "I don't do a whole lot ... but docker, maybe."
   [& args]
   (while true
     (o/schedule)
-    (Thread/sleep 10000)
+    (Thread/sleep 20000)
     (println "Looping")))

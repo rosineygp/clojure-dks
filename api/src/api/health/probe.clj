@@ -1,7 +1,12 @@
-(ns api.health.probe)
+(ns api.health.probe
+  "Kuberntes based probes.")
 
-(defn liveness []
+(defn liveness
+  "Return the liveness state"
+  []
   (hash-map :status "ok"))
 
-(defn readiness []
+(defn readiness
+  "Return the readiness state"
+  []
   (hash-map :status "ok"))
