@@ -1,20 +1,12 @@
 (ns api.service.mongo
   "Just a mongo CRUD."
-  (:require [monger.core :as mg]
+  (:require [api.boot.connector :as connector]
             [monger.collection :as mc]
             [monger.credentials :as mcred])
   (:import org.bson.types.ObjectId))
 
-(let [host (or (System/getenv "MONGO_HOST") "localhost")
-      port (Integer/parseInt (or (System/getenv "MONGO_PORT") "27017"))
-      database (or (System/getenv "MONGO_DATABASE_NAME") "schedule")
-      collection "cron"
-      credentials (mcred/create
-                   (or (System/getenv "MONGO_USER") "root")
-                   (or (System/getenv "MONGO_AUTH_DB") "admin")
-                   (or (System/getenv "MONGO_PASSWORD") "password"))
-      conn (mg/connect-with-credentials host port credentials)
-      db (mg/get-db conn database)]
+(let [collection "cron"
+      db (connector/monger)]
 
   (defn id-to-str
     "Convert mongo ObjectId to string."
