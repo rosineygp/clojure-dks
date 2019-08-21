@@ -8,7 +8,6 @@
   (cheshire/parse-string (slurp body) true))
 
 (deftest a-test
-
   (testing "Test if docs exists"
     (let [response (app (-> (mock/request :get  "/index.html")))]
       (is (= (:status response) 200)))))
