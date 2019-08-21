@@ -1,4 +1,5 @@
 (ns api.handler
+  "User IO"
   (:require [compojure.api.sweet :refer :all]
             [ring.util.http-response :refer :all]
             [schema.core :as s]
@@ -7,6 +8,7 @@
             [api.health.probe :as health]))
 
 (def app
+  "Definition of endpoints."
   (api
    {:swagger
     {:ui "/"

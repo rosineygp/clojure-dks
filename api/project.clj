@@ -1,5 +1,5 @@
- (defproject api "0.1.0-SNAPSHOT"
-   :description "FIXME: write description"
+ (defproject api "0.4.2"
+   :description "Just another CRUD job scheduler."
    :dependencies [[org.clojure/clojure "1.8.0"]
                   [metosin/compojure-api "1.1.11"]
                   [com.novemberain/monger "3.1.0"]
@@ -13,4 +13,5 @@
                               [lein-cljfmt "0.6.4"]
                               [lein-cloverage "1.1.1"]
                               [jonase/eastwood "0.3.5"]
-                              [lein-kibit "0.1.7"]]}})
+                              [lein-kibit "0.1.7"]
+                              [lein-codox "0.10.7"]]}})
