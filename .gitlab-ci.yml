@@ -1,5 +1,6 @@
 stages:
   - test
+  - auto-docs
 
 .lein:
   stage: test
@@ -53,6 +54,14 @@ stages:
   image: hadolint/hadolint:latest-debian
   stage: test
 
+.lein-docs:
+  stage: auto-docs
+  script:
+    - lein codox
+  only:
+    - master
+    - tags
+
 style:api:
   extends: 
     - .lein-api
@@ -102,3 +111,19 @@ hadolint:worker:
   extends: .hadolint
   script:
     - hadolint worker/Dockerfile
+
+codox:api:
+  extends:
+    - .lein-api
+    - .lein-docs
+  artifacts:
+    paths:
+      - api/target/default/doc
+
+codox:worker:
+  extends:
+    - .lein-worker
+    - .lein-docs
+  artifacts:
+    paths:
+      - worker/target/default/doc
