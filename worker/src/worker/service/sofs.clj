@@ -5,20 +5,20 @@
   (:require [me.raynes.fs :refer :all]
             [clojure.java.io :as io]))
 
-(def storage 
+(def storage
   "Place that files will placed and shared with containers."
   (or (System/getenv "SCRIPT_STORAGE") "/tmp/ajb/"))
-(def header 
+(def header
   "Script header."
   (or (System/getenv "SCRIPT_HEADER") "set -x \n"))
 
-(defn- write-file 
+(defn- write-file
   "Write or rewrite a file in file system."
   [full-path script]
   (with-open [w (clojure.java.io/writer full-path :append false)]
     (.write w (str script))))
 
-(defn make-script 
+(defn make-script
   "Concat the header value with information passed to user."
   [id script]
   (let [folder (str storage id)

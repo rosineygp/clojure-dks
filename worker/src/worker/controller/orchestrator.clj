@@ -5,7 +5,7 @@
             [worker.service.sofs :refer :all :as sofs]
             [worker.service.cron :refer :all :as cron]))
 
-(defn set-as-running 
+(defn set-as-running
   "Change the state of scheduler to running."
   [id]
   (let [document (dissoc (restore-by-id id) :_id)]
@@ -14,7 +14,7 @@
                {:updated-at (cron/local-now)
                 :status "running"}))))
 
-(defn save-log 
+(defn save-log
   "Update result of job to database."
   [id log]
   (let [document (dissoc (restore-by-id id) :_id)
@@ -25,7 +25,7 @@
                 :logs [log]
                 :status "completed"}))))
 
-(defn run-job 
+(defn run-job
   "Just run the job"
   [job]
   (let [image (:docker-image job)
@@ -34,7 +34,7 @@
         mount-point (sofs/make-script id command)]
     (cni/docker-script id image mount-point)))
 
-(defn schedule 
+(defn schedule
   "Get information from database and orchestrate the flow."
   []
   (let [jobs (filter #(cron/filter-run (:cron %))

@@ -4,7 +4,7 @@
             [clj-time.local :as l]
             [clojure.string :as s]))
 
-(defn- sys-time 
+(defn- sys-time
   "return a date-time based on system local time"
   []
   (let [sys (l/local-now)]
@@ -14,7 +14,7 @@
                  (t/hour sys)
                  (t/minute sys))))
 
-(defn run-it? 
+(defn run-it?
   "Return true if date and time passed is lower than or equal now"
   [year month day hour minute]
   (let [sys (sys-time)
@@ -33,7 +33,7 @@
            (:hour cron)
            (:minute cron)))
 
-(defn local-now 
+(defn local-now
   "retunr local time as string. util to send to db."
   []
   (str (l/local-now)))
