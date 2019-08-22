@@ -1,36 +1,42 @@
 # worker
 
-FIXME: description
-
-## Installation
-
-Download from http://example.com/FIXME.
+Just another WORKER
 
 ## Usage
 
-FIXME: explanation
+### Run the application locally
 
-    $ java -jar worker-0.1.0-standalone.jar [args]
+`lein run`
 
-## Options
+> Use export (ex. export MONGO_HOST=mongo) to change local variables
 
-FIXME: listing of options this app accepts.
+### Packaging and running
 
-## Examples
+```
+docker build -t <foo>/<bar>:<tag>
 
-...
+docker run --name mongo -d \
+    -e MONGO_INITDB_ROOT_USERNAME=schedule \
+    -e MONGO_INITDB_ROOT_PASSWORD=<password> mongo:4.2
 
-### Bugs
+docker run --name worker -d \
+    -v /tmp/ajb/:/tmp/ajb/ \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    --link mongo:mongo \
+    -e MONGO_HOST=mongo \
+    -e MONGO_USER=schedule \
+    -e MONGO_PASSWORD=<password> <foo>/<bar>:<tag>
+```
 
-...
+### Variables
 
-### Any Other Sections
-### That You Think
-### Might be Useful
-
-## License
-
-Copyright © 2019 FIXME
-
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
+|Name|Default|
+|----|-------|
+|MONGO_HOST|localhost|
+|MONGO_PORT|27017|
+|MONGO_DATABASE_NAME|schedule|
+|MONGO_USER|root|
+|MONGO_AUTH_DB|admin|
+|MONGO_PASSWORD|password|
+|SCRIPT_STORAGE|/tmp/ajb/|
+|SCRIPT_HEADER|set -x \n|
