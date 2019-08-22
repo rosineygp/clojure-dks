@@ -1,6 +1,6 @@
 # api
 
-FIXME
+Just another CRUD
 
 ## Usage
 
@@ -8,17 +8,32 @@ FIXME
 
 `lein ring server`
 
-### Packaging and running as standalone jar
+> Use export (ex. export MONGO_HOST=mongo) to change local variables
+
+### Packaging and running
 
 ```
-lein do clean, ring uberjar
-java -jar target/server.jar
+docker build -t <foo>/<bar>:<tag>
+
+docker run --name mongo -d \
+    -e MONGO_INITDB_ROOT_USERNAME=schedule \
+    -e MONGO_INITDB_ROOT_PASSWORD=<password> mongo:4.2
+
+docker run --name api -d \
+    --link mongo:mongo \
+    -e MONGO_HOST=mongo \
+    -e MONGO_USER=schedule \
+    -e MONGO_PASSWORD=<password> \
+    -p 3000:3000 <foo>/<bar>:<tag>
 ```
 
-### Packaging as war
+### Variables
 
-`lein ring uberwar`
-
-## License
-
-Copyright ©  FIXME
+|Name|Default|
+|----|-------|
+|MONGO_HOST|localhost|
+|MONGO_PORT|27017|
+|MONGO_DATABASE_NAME|schedule|
+|MONGO_USER|root|
+|MONGO_AUTH_DB|admin|
+|MONGO_PASSWORD|password|
