@@ -66,12 +66,12 @@ stages:
     - tags
 
 style:api:
-  extends: 
+  extends:
     - .lein-api
     - .lein-style
 
 style:worker:
-  extends: 
+  extends:
     - .lein-worker
     - .lein-style
 
@@ -92,23 +92,23 @@ unit:api:
   variables:
     MONGO_INITDB_ROOT_USERNAME: root
     MONGO_INITDB_ROOT_PASSWORD: password
-  extends: 
+  extends:
     - .lein-api
     - .lein-unit
 
 unit:worker:
   allow_failure: true
-  extends: 
+  extends:
     - .lein-worker-docker
     - .lein-unit
 
 kibit:api:
-  extends: 
+  extends:
     - .lein-api
     - .lein-kibit
 
 kibit:worker:
-  extends: 
+  extends:
     - .lein-worker
     - .lein-kibit
 
